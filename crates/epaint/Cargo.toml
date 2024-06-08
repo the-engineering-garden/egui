@@ -1,10 +1,10 @@
 [package]
 name = "epaint"
-version.workspace = true
+version = "0.26.2"
 authors = ["Emil Ernerfeldt <emil.ernerfeldt@gmail.com>"]
 description = "Minimal 2D graphics library for GUI work"
-edition.workspace = true
-rust-version.workspace = true
+edition = "2021"
+rust-version = "1.72"
 homepage = "https://github.com/emilk/egui/tree/master/crates/epaint"
 license = "(MIT OR Apache-2.0) AND OFL-1.1 AND LicenseRef-UFL-1.0" # OFL and UFL used by default_fonts. See https://github.com/emilk/egui/issues/2321
 readme = "README.md"
@@ -80,22 +80,25 @@ serde = ["dep:serde", "ahash/serde", "emath/serde", "ecolor/serde"]
 unity = []
 
 [dependencies]
-emath.workspace = true
-ecolor.workspace = true
+emath = { version = "0.26.2", path = "../emath", default-features = false }
+ecolor = { version = "0.26.2", path = "../ecolor", default-features = false }
 
 ab_glyph = "0.2.11"
-ahash.workspace = true
-nohash-hasher.workspace = true
-parking_lot.workspace = true   # Using parking_lot over std::sync::Mutex gives 50% speedups in some real-world scenarios.
+ahash = { version = "0.8.6", default-features = false, features = [
+    "no-rng", # we don't need DOS-protection, so we let users opt-in to it instead
+    "std",
+] }
+nohash-hasher = "0.2"
+parking_lot = "0.12"
 
 #! ### Optional dependencies
 bytemuck = { version = "1.7.2", optional = true, features = ["derive"] }
 
 ## Enable this when generating docs.
-document-features = { workspace = true, optional = true }
+document-features = { version = "0.2.8", optional = true }
 
-log = { workspace = true, optional = true }
-puffin = { workspace = true, optional = true }
+log = { version = "0.4", optional = true }
+puffin = { version = "0.19", optional = true }
 rayon = { version = "1.7", optional = true }
 
 ## Allow serialization using [`serde`](https://docs.rs/serde) .
@@ -103,11 +106,11 @@ serde = { version = "1", optional = true, features = ["derive", "rc"] }
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-backtrace = { workspace = true, optional = true }
+backtrace = { version = "0.3", optional = true }
 
 
 [dev-dependencies]
-criterion.workspace = true
+criterion = { version = "0.5.1", default-features = false }
 
 
 [[bench]]
